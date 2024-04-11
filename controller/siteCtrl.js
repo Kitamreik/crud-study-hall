@@ -24,17 +24,20 @@ const allCharacters = async (req, res, next) => {
 
 const charId = async (req, res, next) => {
     const { _id } = req.params; //store the req.params object in variable
+    //EXAMPLE: { _id: '0a0b4c' }, { _id: '001' }
       console.log(req.params); //console log variable. Read the server.
   
     const foundChar = gameInventory.find(gameInventory => gameInventory._id === Number(_id)); 
     
       try {
       //we can place the try before the if to be the "magic checkpoint"
-  
+
+      //Experimental code:
+      //console.log(gameInventory); //Log the inventory so you know you can get the data retrieved first, but comment out because it clogs server logs...
+      
       //use a switch statement with the _id as the key, the Id strings as cases 
-      
-      
       switch (_id) {
+        
         //Each number case has a message of "This is character number 1, 2, 3, etc". 
         case '001':
           res.json("This is character number 1");
@@ -55,6 +58,14 @@ const charId = async (req, res, next) => {
                 data:  gameInventory[3] //use the index of 3 because the gameInventory to find the data object
             }); 
         break;
+
+        //BONUS Experimental Code that worked!
+        case _id:
+          //req.params --> { _id: ':_id' }
+          console.log("http://localhost:5050/characters/:_id");
+          //do
+          res.json("You're using the id as a parameter or literally typing the route out.");
+          break;
         default: //does detect errors successfully
           res.json("Character not found. Search again."); //default message of "Character not found. Search again." 
           break;
